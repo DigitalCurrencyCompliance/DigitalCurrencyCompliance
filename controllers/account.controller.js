@@ -8,7 +8,7 @@ exports.test = async function ( req, res ) {
   let response;
   try{
     await request
-    .get('http://coincap.io/page/ETH')
+    .get('http://coincap.io/page/LTC')
     .then((res) =>{
         console.log(res.body);
         response = res.body;
@@ -18,6 +18,22 @@ exports.test = async function ( req, res ) {
     }
   res.send (response);
 }
+
+exports.infura = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('https://api.infura.io/v1/jsonrpc/mainnet/eth_getBlockByNumber?params=["latest",false]')
+    .then((res) =>{
+        console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
+
 
 
 // exports.test = function ( req, res ) {
