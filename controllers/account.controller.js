@@ -1,11 +1,28 @@
 const mongoose = require ( 'mongoose' );
 const Account = mongoose.model ( 'Account' );
 const chalk = require ( 'chalk' );
+const request = require('superagent');
 
 //Simple version, without validation or sanitation
-exports.test = function ( req, res ) {
-    res.send ( 'Greetings from the account Test controller!' );
-};
+exports.test = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('http://coincap.io/page/ETH')
+    .then((res) =>{
+        console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
+
+
+// exports.test = function ( req, res ) {
+//     res.send ( 'Greetings from the account Test controller!' );
+// };
 
 // // vvv create method *** This is where the magic happens ***********************
 // exports.create_transaction = async function ( req, res ) {
