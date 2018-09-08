@@ -2,8 +2,9 @@ const mongoose = require ( 'mongoose' );
 const Account = mongoose.model ( 'Account' );
 const chalk = require ( 'chalk' );
 const request = require('superagent');
+const web3 = require('web3');
 
-//Simple version, without validation or sanitation
+// CoinCap API call, without validation or sanitation
 exports.test = async function ( req, res ) {
   let response;
   try{
@@ -19,6 +20,7 @@ exports.test = async function ( req, res ) {
   res.send (response);
 }
 
+// infura Api call
 exports.infura = async function ( req, res ) {
   let response;
   try{
@@ -34,7 +36,21 @@ exports.infura = async function ( req, res ) {
   res.send (response);
 }
 
-
+// create ethereum wallet
+exports.newEthWallet = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('https://api.infura.io/v1/jsonrpc/mainnet/eth_getBlockByNumber?params=["latest",false]')
+    .then((res) =>{
+        console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
 
 // exports.test = function ( req, res ) {
 //     res.send ( 'Greetings from the account Test controller!' );
