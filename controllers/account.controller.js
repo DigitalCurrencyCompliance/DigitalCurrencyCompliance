@@ -42,14 +42,14 @@ exports.infura = async function ( req, res ) {
 exports.new_account = async function ( req, res ) {
   let newAccount = new Account (
     {
-      ein: '123456-78',
-      password: 'password',
-      companyType: 'LLC',
-      BTC: 'BtcAddress',
-      ETH: 'EthAddress',
-      PIVX: 'PivxAddress',
-      DCT: 'DctAddress',
-      DAI: 'DaiAddress'
+      ein: req.body.ein,
+      password: req.body.password,
+      companyType: req.body.companyType,
+      BTC: req.body.BTC,
+      ETH: req.body.ETC,
+      PIVX: req.body.PIVX,
+      DCT: req.body.DCT,
+      DAI: req.body.DAI
     }
   );
 
