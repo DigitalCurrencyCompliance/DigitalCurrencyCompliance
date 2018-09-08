@@ -16,10 +16,10 @@ const mongoose = require('mongoose');
 // REVIEW: register schemas
 require('./models/account.model.js');
 
-// let dev_db_url = `mongodb://${credentials.user}:${credentials.password}@ds249942.mlab.com:49942/digital_currency_compliance`;
-let dev_db_url = 'mongodb://localhost:27017/marketplaceDB';
+let dev_db_url = `mongodb://${credentials.user}:${credentials.password}@ds249942.mlab.com:49942/digital_currency_compliance`;
+// let dev_db_url = 'mongodb://localhost:27017/marketplaceDB';
 // REVIEW: mongoDB switch statment
-let mongoDB = /* process.env.MONGODB_URI || */ dev_db_url;
+let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
