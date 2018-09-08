@@ -8,7 +8,7 @@ let AccountSchema = new Schema({
     BTC: {type: String, required: false, max: 64},
     ETH: {type: String, required: false, default: "pending", max: 32},
     PIVX: {type: String, required: false, max: 64},
-    DECENT: {type: String, required: false, max: 64},
+    DCT: {type: String, required: false, max: 64},
     DAI: {type: String, required: false}
 });
 

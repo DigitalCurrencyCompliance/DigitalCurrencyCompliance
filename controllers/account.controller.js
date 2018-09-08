@@ -1,8 +1,6 @@
 const mongoose = require ( 'mongoose' );
 const Account = mongoose.model ( 'Account' );
 const chalk = require ( 'chalk' );
-const request = require('superagent');
-const web3 = require('web3');
 
 // CoinCap API call, without validation or sanitation
 exports.test = async function ( req, res ) {
@@ -36,25 +34,28 @@ exports.infura = async function ( req, res ) {
   res.send (response);
 }
 
-// create ethereum wallet
-exports.newEthWallet = async function ( req, res ) {
-  let response;
-  try{
-    await request
-    .get('https://api.infura.io/v1/jsonrpc/mainnet/eth_getBlockByNumber?params=["latest",false]')
-    .then((res) =>{
-        console.log(res.body);
-        response = res.body;
-    })
-  } catch(err){
-      console.log(err);
-    }
-  res.send (response);
-}
 
-// exports.test = function ( req, res ) {
-//     res.send ( 'Greetings from the account Test controller!' );
-// };
+  // await new ETH walletAddress
+  // ethData = await ethereum_controller.get_new_address();
+  // newAccount.ETH = ethData
+
+  // await new PIVX walletAddress
+  pivxData = await pivx_controller.get_new_address();
+  newAccount.PIVX = pivxData;
+
+  // await new DCT walletAddress
+
+  // await new DAI walletAddress
+
+  //save account object to the database
+  newAccount.save ( function ( err, dbResponse ) {
+    if ( err ) {
+      res.send( err );
+    }
+    console.log ( "***" + chalk.white( dbResponse ) + "***" );
+    res.send ( dbResponse );
+  });
+}
 
 // // vvv create method *** This is where the magic happens ***********************
 // exports.create_transaction = async function ( req, res ) {
