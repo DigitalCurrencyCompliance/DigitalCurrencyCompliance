@@ -9,7 +9,7 @@ const app = express();
 // that bodyParser works universally.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-let port = 3030;
+let port = process.env.SERVER_PORT;
 
 
 // vvv Set up mongoose connection
