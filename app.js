@@ -9,7 +9,11 @@ const app = express();
 // that bodyParser works universally.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+// let port = process.env.SERVER_PORT;
 let port = 3030;
+if (process.env.SERVER_PORT != undefined) {
+    port = process.env.SERVER_PORT
+}
 
 
 // vvv Set up mongoose connection
@@ -34,9 +38,11 @@ let transactionDB = db.collection("transactions")
 // Imports routes for the products
 const account = require('./routes/account.route.js');
 const transaction = require('./routes/transaction.route.js');
+const home = require('./routes/home.route.js');
 // directs app to use var api for route api
 app.use('/account', account);
 app.use('/transaction', account);
+app.use('/', home);
 
 app.listen(port, () => {
     console.log('Server is up and running on port number ' + port);
