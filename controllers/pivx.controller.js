@@ -24,9 +24,10 @@ exports.get_new_address = async function (req,res){
                   return pivxData;
               })
       } catch(err) {
-          pivxData.status = err.status
+          pivxData.result = err.message
+          console.log(pivxData.result);
           console.log ( chalk.red ( "REQUEST ERROR in get_new_address" ) );
-          return pivxData;
+          return pivxData.result;
       };
       return pivxData.result;
 }
