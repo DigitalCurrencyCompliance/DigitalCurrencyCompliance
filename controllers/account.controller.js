@@ -1,7 +1,12 @@
 const mongoose = require ( 'mongoose' );
 const Account = mongoose.model ( 'Account' );
 const chalk = require ( 'chalk' );
-const request = require('superagent');
+const request = require( 'superagent' );
+
+// returns a message for testing routes
+exports.msg = function (req, res) {
+  res.send("Generic Success Message");
+}
 
 //Simple version, without validation or sanitation
 exports.test = async function ( req, res ) {
