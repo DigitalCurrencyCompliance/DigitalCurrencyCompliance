@@ -10,7 +10,7 @@ exports.test = async function ( req, res ) {
     await request
     .get('http://coincap.io/page/LTC')
     .then((res) =>{
-        console.log(res.body);
+        // console.log(res.body);
         response = res.body;
     })
   } catch(err){
