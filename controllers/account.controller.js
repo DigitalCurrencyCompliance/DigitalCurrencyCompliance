@@ -2,6 +2,8 @@ const mongoose = require ( 'mongoose' );
 const Account = mongoose.model ( 'Account' );
 const chalk = require ( 'chalk' );
 const request = require( 'superagent' );
+const pivx_controller = require('./pivx.controller');
+const ethereum_controller = require('./ethereum.controller');
 
 // returns a message for testing routes
 exports.msg = function (req, res) {
@@ -40,18 +42,34 @@ exports.infura = async function ( req, res ) {
 }
 
 exports.new_account = async function ( req, res ) {
+  let ethData;
+  let pivxData;
   let newAccount = new Account (
     {
-      ein: '123456-78',
-      password: 'password',
-      companyType: 'LLC',
-      BTC: 'BtcAddress',
-      ETH: 'EthAddress',
-      PIVX: 'PivxAddress',
-      DCT: 'DctAddress',
-      DAI: 'DaiAddress'
+      ein: req.body.ein,
+      password: req.body.password,
+      companyType: req.body.companyType,
+      BTC: req.body.BTC,
+      ETH: req.body.ETH,
+      PIVX: req.body.PIVX,
+      DCT: req.body.DCT,
+      DAI: req.body.DAI
     }
   );
+
+  // await new BTC walletAddress
+
+  // await new ETH walletAddress
+  // ethData = await ethereum_controller.get_new_address();
+  // newAccount.ETH = ethData
+
+  // await new PIVX walletAddress
+  pivxData = await pivx_controller.get_new_address();
+  newAccount.PIVX = pivxData;
+
+  // await new DCT walletAddress
+
+  // await new DAI walletAddress
 
   //save account object to the database
   newAccount.save ( function ( err, dbResponse ) {

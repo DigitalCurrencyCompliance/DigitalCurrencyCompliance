@@ -8,7 +8,7 @@ const account_controller = require('../controllers/account.controller');
 router.get('/test', account_controller.test);
 
 // create a new accounts
-router.get('/newAccount', account_controller.new_account);
+router.post('/newAccount', account_controller.new_account);
 
 // create a BTC wallet
 router.post('/newBtcWallet', account_controller.test);
