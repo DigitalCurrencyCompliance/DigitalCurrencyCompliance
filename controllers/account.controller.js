@@ -39,11 +39,29 @@ exports.infura = async function ( req, res ) {
   res.send (response);
 }
 
+exports.new_account = async function ( req, res ) {
+  let newAccount = new Account (
+    {
+      ein: '123456-78',
+      password: 'password',
+      companyType: 'LLC',
+      BTC: 'BtcAddress',
+      ETH: 'EthAddress',
+      PIVX: 'PivxAddress',
+      DCT: 'DctAddress',
+      DAI: 'DaiAddress'
+    }
+  );
 
-
-// exports.test = function ( req, res ) {
-//     res.send ( 'Greetings from the account Test controller!' );
-// };
+  //save account object to the database
+  newAccount.save ( function ( err, dbResponse ) {
+    if ( err ) {
+      res.send( err );
+    }
+    console.log ( "***" + chalk.white( dbResponse ) + "***" );
+    res.send ( dbResponse );
+  });
+}
 
 // // vvv create method *** This is where the magic happens ***********************
 // exports.create_transaction = async function ( req, res ) {
