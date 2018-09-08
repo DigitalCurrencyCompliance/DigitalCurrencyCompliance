@@ -7,8 +7,11 @@ const account_controller = require('../controllers/account.controller');
 // a simple test url to check that all of our files are communicating correctly.
 router.get('/test', account_controller.test);
 
-// create a wallet
-router.post('/newWallet', account_controller.test);
+// create a BTC wallet
+router.post('/newBtcWallet', account_controller.test);
+
+// create an ETH newWallet
+router.post('/newEthWallet', account_controller.test);
 
 // // create a transaction.
 // router.post('/dcc/createTransaction', account_controller.create_transaction);
