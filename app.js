@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const credentials = require('./credentials');
+const chalk = require('chalk');
 // initialize our express ap
 const app = express();
 // directs app to use bodyParser, moved immediately below app declaration so
@@ -17,6 +18,9 @@ const mongoose = require('mongoose');
 require('./models/account.model.js');
 
 let dev_db_url = `mongodb://${credentials.user}:${credentials.password}@ds249942.mlab.com:49942/digital_currency_compliance`;
+console.log(chalk.white(credentials.user));
+console.log(chalk.white(credentials.password));
+console.log(chalk.yellow(dev_db_url));
 // let dev_db_url = 'mongodb://localhost:27017/marketplaceDB';
 // REVIEW: mongoDB switch statment
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
