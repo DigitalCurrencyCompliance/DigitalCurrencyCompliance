@@ -14,6 +14,20 @@ exports.msg = function (req, res) {
   res.send("Generic Success Message");
 }
 
+exports.find_by_id = async function (req, res) {
+  let dbData;
+  Account.findById( req.body._id, function (err,res){
+      if (err) {
+        console.log('TestThree3', err);
+      } else {
+        dbData = res.body;
+        console.log('TestTwo2', dbData)
+      }
+    }
+  );
+  res.send(dbData);
+  console.log('TestOne1', dbData);
+}
 //Simple version, without validation or sanitation
 exports.test = async function ( req, res ) {
   let response;
