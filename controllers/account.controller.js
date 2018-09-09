@@ -1,11 +1,164 @@
 const mongoose = require ( 'mongoose' );
 const Account = mongoose.model ( 'Account' );
 const chalk = require ( 'chalk' );
+const request = require( 'superagent' );
+const pivx_controller = require('./pivx.controller');
+const ethereum_controller = require('./ethereum.controller');
+const decent_controller = require('./decent.controller');
+const bitcoin_controller = require('./bitcoin.controller')
+const dai_controller = require('./dai.controller');
 
+
+// returns a message for testing routes
+exports.msg = function (req, res) {
+  res.send("Generic Success Message");
+}
+// find_by_id *** moved to mongo.controller
+// exports.find_by_id = async function (req, res) {
+//   let dbData;
+//   await Account.findById( req.body._id, function (err,response){
+//       if (err) {
+//         console.log('TestThree3', err);
+//       } else {
+//         dbData = response;
+//         console.log('TestTwo2', dbData)
+//       }
+//     }
+//   );
+//   res.send(dbData);
+//   console.log('TestOne1', dbData);
+// }
 //Simple version, without validation or sanitation
-exports.test = function ( req, res ) {
-    res.send ( 'Greetings from the account Test controller!' );
-};
+exports.test = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('http://coincap.io/page/LTC')
+    .then((res) =>{
+        // console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
+
+exports.eth = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('http://coincap.io/page/LTC')
+    .then((res) =>{
+        console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
+
+exports.infura = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('https://api.infura.io/v1/jsonrpc/mainnet/eth_getBlockByNumber?params=["latest",false]')
+    .then((res) =>{
+        console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
+
+exports.new_account = async function ( req, res ) {
+  let ethData;
+  let pivxData;
+  let dctData;
+  let btcData;
+  let daiData;
+
+  let newAccount = new Account (
+    {
+      businessName: req.body.businessName,
+      ein: req.body.ein,
+      password: req.body.password,
+      companyType: req.body.companyType,
+      BTC: req.body.BTC,
+      ETH: req.body.ETH,
+      PIVX: req.body.PIVX,
+      DCT: req.body.DCT,
+      DAI: req.body.DAI,
+      corporationName: '',
+      closeCorp: false,
+
+      registeredAgentName: '',
+      agentAddress: '',
+      agentCity: '',
+      agentCounty: '',
+      agentState: '',
+      agentPostalCode: '',
+
+      mailingAddress: '',
+      mailingCity: '',
+      mailingCounty: '',
+      mailingState: '',
+      mailingPostalCode: '',
+
+      sameAddrs: false,
+
+      officeAddress: '',
+      officeCity: '',
+      officeCounty: '',
+      officeState: '',
+      officePostalCode: '',
+
+      shareClass: '',
+      shareNumber: '',
+
+      ownersArray: [],
+
+      contactPerson: '',
+      phoneNumber: '',
+      email: ''
+    }
+  );
+
+  // await new BTC walletAddress
+  btcData = await bitcoin_controller.get_new_address();
+  newAccount.BTC = btcData
+
+  // await new ETH walletAddress
+
+  //
+  ethData = await ethereum_controller.get_new_address();
+  newAccount.ETH = ethData;
+
+  // await new PIVX walletAddress
+  pivxData = await pivx_controller.get_new_address();
+  newAccount.PIVX = pivxData;
+
+  // await new DCT walletAddress
+  dctData = await decent_controller.get_new_address();
+  newAccount.DCT = dctData;
+
+
+  // await new DAI walletAddress
+  daiData = await dai_controller.get_new_address();
+  newAccount.DAI = daiData;
+
+  //save account object to the database
+  newAccount.save ( function ( err, dbResponse ) {
+    if ( err ) {
+      res.send( err );
+    }
+    console.log ( "***" + chalk.white( dbResponse ) + "***" );
+    res.send ( dbResponse );
+  });
+}
 
 // // vvv create method *** This is where the magic happens ***********************
 // exports.create_transaction = async function ( req, res ) {

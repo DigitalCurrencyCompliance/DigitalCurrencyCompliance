@@ -9,18 +9,20 @@ const app = express();
 // that bodyParser works universally.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+// let port = process.env.SERVER_PORT;
 let port = 3030;
+if (process.env.SERVER_PORT != undefined) {
+    port = process.env.SERVER_PORT
+}
 
 
 // vvv Set up mongoose connection
 const mongoose = require('mongoose');
 // REVIEW: register schemas
 require('./models/account.model.js');
+require('./models/transaction.model.js');
 
 let dev_db_url = `mongodb://${credentials.user}:${credentials.password}@ds249942.mlab.com:49942/digital_currency_compliance`;
-console.log(chalk.white(credentials.user));
-console.log(chalk.white(credentials.password));
-console.log(chalk.yellow(dev_db_url));
 // let dev_db_url = 'mongodb://localhost:27017/marketplaceDB';
 // REVIEW: mongoDB switch statment
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
@@ -29,13 +31,34 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 // test MongoDB connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-let accountDB = db.collection("account");
+let accountDB = db.collection("accounts");
+let transactionDB = db.collection("transactions")
 // ^^^ Set up mongoose connection
 
 // Imports routes for the products
 const account = require('./routes/account.route.js');
+const transaction = require('./routes/transaction.route.js');
+const home = require('./routes/home.route.js');
 // directs app to use var api for route api
-app.use('/account', account)
+app.use('/account',
+    (req, res, next) => {
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header(
+            'Access-Control-Allow-Headers',
+            'content-type, authorization, content-length, x-requested-with, accept, origin'
+        );
+        res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+        res.header('Allow', 'POST, GET, OPTIONS');
+        res.header('Access-Control-Allow-Origin', '*');
+        if (req.method === 'OPTIONS') {
+            res.sendStatus(200);
+        } else {
+            next();
+        }
+    },
+ account);
+app.use('/transaction', account);
+app.use('/', home);
 
 app.listen(port, () => {
     console.log('Server is up and running on port number ' + port);
