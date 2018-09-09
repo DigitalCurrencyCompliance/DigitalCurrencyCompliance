@@ -4,7 +4,7 @@ const chalk = require ( 'chalk' );
 const request = require( 'superagent' );
 const pivx_controller = require('./pivx.controller');
 const ethereum_controller = require('./ethereum.controller');
-const dedent_controller = require('./decent.controller')
+const decent_controller = require('./decent.controller')
 
 // returns a message for testing routes
 exports.msg = function (req, res) {
