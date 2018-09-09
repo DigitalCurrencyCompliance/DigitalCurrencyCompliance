@@ -16,11 +16,11 @@ exports.msg = function (req, res) {
 
 exports.find_by_id = async function (req, res) {
   let dbData;
-  Account.findById( req.body._id, function (err,res){
+  await Account.findById( req.body._id, function (err,response){
       if (err) {
         console.log('TestThree3', err);
       } else {
-        dbData = res.body;
+        dbData = response;
         console.log('TestTwo2', dbData)
       }
     }
