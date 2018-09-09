@@ -13,21 +13,21 @@ const dai_controller = require('./dai.controller');
 exports.msg = function (req, res) {
   res.send("Generic Success Message");
 }
-
-exports.find_by_id = async function (req, res) {
-  let dbData;
-  await Account.findById( req.body._id, function (err,response){
-      if (err) {
-        console.log('TestThree3', err);
-      } else {
-        dbData = response;
-        console.log('TestTwo2', dbData)
-      }
-    }
-  );
-  res.send(dbData);
-  console.log('TestOne1', dbData);
-}
+// find_by_id *** moved to mongo.controller
+// exports.find_by_id = async function (req, res) {
+//   let dbData;
+//   await Account.findById( req.body._id, function (err,response){
+//       if (err) {
+//         console.log('TestThree3', err);
+//       } else {
+//         dbData = response;
+//         console.log('TestTwo2', dbData)
+//       }
+//     }
+//   );
+//   res.send(dbData);
+//   console.log('TestOne1', dbData);
+// }
 //Simple version, without validation or sanitation
 exports.test = async function ( req, res ) {
   let response;
