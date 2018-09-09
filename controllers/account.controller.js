@@ -69,6 +69,7 @@ exports.new_account = async function ( req, res ) {
 
   let newAccount = new Account (
     {
+      businessName: req.body.businessName,
       ein: req.body.ein,
       password: req.body.password,
       companyType: req.body.companyType,
@@ -76,7 +77,39 @@ exports.new_account = async function ( req, res ) {
       ETH: req.body.ETH,
       PIVX: req.body.PIVX,
       DCT: req.body.DCT,
-      DAI: req.body.DAI
+      DAI: req.body.DAI,
+      corporationName: '',
+      closeCorp: false,
+
+      registeredAgentName: '',
+      agentAddress: '',
+      agentCity: '',
+      agentCounty: '',
+      agentState: '',
+      agentPostalCode: '',
+
+      mailingAddress: '',
+      mailingCity: '',
+      mailingCounty: '',
+      mailingState: '',
+      mailingPostalCode: '',
+
+      sameAddrs: false,
+
+      officeAddress: '',
+      officeCity: '',
+      officeCounty: '',
+      officeState: '',
+      officePostalCode: '',
+
+      shareClass: '',
+      shareNumber: '',
+
+      ownersArray: [],
+
+      contactPerson: '',
+      phoneNumber: '',
+      email: ''
     }
   );
 
