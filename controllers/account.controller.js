@@ -6,6 +6,8 @@ const pivx_controller = require('./pivx.controller');
 const ethereum_controller = require('./ethereum.controller');
 const decent_controller = require('./decent.controller');
 const bitcoin_controller = require('./bitcoin.controller')
+const dai_controller = require('./dai.controller');
+
 
 // returns a message for testing routes
 exports.msg = function (req, res) {
@@ -20,6 +22,21 @@ exports.test = async function ( req, res ) {
     .get('http://coincap.io/page/LTC')
     .then((res) =>{
         // console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
+
+exports.eth = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('http://coincap.io/page/LTC')
+    .then((res) =>{
+        console.log(res.body);
         response = res.body;
     })
   } catch(err){
@@ -48,6 +65,8 @@ exports.new_account = async function ( req, res ) {
   let pivxData;
   let dctData;
   let btcData;
+  let daiData;
+
   let newAccount = new Account (
     {
       ein: req.body.ein,
@@ -66,8 +85,10 @@ exports.new_account = async function ( req, res ) {
   newAccount.BTC = btcData
 
   // await new ETH walletAddress
-  // ethData = await ethereum_controller.get_new_address();
-  // newAccount.ETH = ethData
+
+  //
+  ethData = await ethereum_controller.get_new_address();
+  newAccount.ETH = ethData;
 
   // await new PIVX walletAddress
   pivxData = await pivx_controller.get_new_address();
@@ -77,7 +98,10 @@ exports.new_account = async function ( req, res ) {
   dctData = await decent_controller.get_new_address();
   newAccount.DCT = dctData;
 
+
   // await new DAI walletAddress
+  daiData = await dai_controller.get_new_address();
+  newAccount.DAI = daiData;
 
   //save account object to the database
   newAccount.save ( function ( err, dbResponse ) {

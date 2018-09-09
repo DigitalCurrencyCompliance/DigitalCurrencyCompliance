@@ -10,6 +10,13 @@ router.get('/test', account_controller.test);
 // create a new accounts
 router.post('/newAccount', account_controller.new_account);
 
+// create a BTC wallet
+router.post('/newBtcWallet', account_controller.test);
+
+// create an ETH newWallet
+router.post('/newEthWallet', account_controller.eth); 
+
+
 // this GETs the infura api Ethereum Block Data
 router.get('/infura', account_controller.infura);
 
