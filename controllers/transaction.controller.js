@@ -6,3 +6,13 @@ const chalk = require ( 'chalk' );
 exports.test = function ( req, res ) {
     res.send ( 'Greetings from the transaction Test controller!' );
 };
+
+// create transaction
+exports.create_transaction = function ( req, res ) {
+    res.send ( 'Greetings from the transaction Test controller!' );
+};
+
+// monitor transaction
+exports.monitor_transaction = function ( req, res ) {
+    res.send ( 'Greetings from the transaction Test controller!' );
+};
