@@ -16,14 +16,9 @@ router.post('/newBtcWallet', account_controller.test);
 // create an ETH newWallet
 router.post('/newEthWallet', account_controller.eth); 
 
+
 // this GETs the infura api Ethereum Block Data
 router.get('/infura', account_controller.infura);
-
-// creat a DCT walletAddress
-router.post('./newDctWallet', account_controller.test);
-
-// create a PIVX walletAddress
-router.post('./newPivxWallet', account_controller.test);
 
 
 // // create a transaction.

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DigitalCurrencyCompliance/DigitalCurrencyCompliance#readme",
   "dependencies": {
+    "bitcore-lib": "^0.15.0",
     "chalk": "^2.4.1",
     "express": "^4.16.3",
     "mongodb": "^3.1.4",

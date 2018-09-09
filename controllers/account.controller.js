@@ -4,8 +4,10 @@ const chalk = require ( 'chalk' );
 const request = require( 'superagent' );
 const pivx_controller = require('./pivx.controller');
 const ethereum_controller = require('./ethereum.controller');
-const dedent_controller = require('./decent.controller');
+const decent_controller = require('./decent.controller');
+const bitcoin_controller = require('./bitcoin.controller')
 const dai_controller = require('./dai.controller');
+
 
 // returns a message for testing routes
 exports.msg = function (req, res) {
@@ -62,7 +64,9 @@ exports.new_account = async function ( req, res ) {
   let ethData;
   let pivxData;
   let dctData;
+  let btcData;
   let daiData;
+
   let newAccount = new Account (
     {
       ein: req.body.ein,
@@ -77,6 +81,8 @@ exports.new_account = async function ( req, res ) {
   );
 
   // await new BTC walletAddress
+  btcData = await bitcoin_controller.get_new_address();
+  newAccount.BTC = btcData
 
   // await new ETH walletAddress
 
@@ -87,10 +93,11 @@ exports.new_account = async function ( req, res ) {
   // await new PIVX walletAddress
   pivxData = await pivx_controller.get_new_address();
   newAccount.PIVX = pivxData;
-  //
-  // // await new DCT walletAddress
-  // dctData = await decent_controller.get_new_address();
-  // newAccount.DCT = dctData;
+
+  // await new DCT walletAddress
+  dctData = await decent_controller.get_new_address();
+  newAccount.DCT = dctData;
+
 
   // await new DAI walletAddress
   daiData = await dai_controller.get_new_address();
