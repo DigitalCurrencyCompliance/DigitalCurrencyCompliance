@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 let AccountSchema = new Schema({
     businessName: {type: String, required: false, max: 64},
     ein: {type: String, required: false, max: 64},
-    password: {type: String, required: true, max: 64},
-    companyType: {type: String, required: true, max: 64},
+    password: {type: String, required: false, max: 64},
+    companyType: {type: String, required: false, max: 64},
     BTC: {type: String, required: false, max: 64},
     ETH: {type: String, required: false, max: 64},
     PIVX: {type: String, required: false, max: 64},
