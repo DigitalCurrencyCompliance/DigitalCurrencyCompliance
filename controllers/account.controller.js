@@ -4,7 +4,8 @@ const chalk = require ( 'chalk' );
 const request = require( 'superagent' );
 const pivx_controller = require('./pivx.controller');
 const ethereum_controller = require('./ethereum.controller');
-const dedent_controller = require('./decent.controller')
+const dedent_controller = require('./decent.controller');
+const dai_controller = require('./dai.controller');
 
 // returns a message for testing routes
 exports.msg = function (req, res) {
@@ -61,6 +62,7 @@ exports.new_account = async function ( req, res ) {
   let ethData;
   let pivxData;
   let dctData;
+  let daiData;
   let newAccount = new Account (
     {
       ein: req.body.ein,
@@ -92,6 +94,8 @@ exports.new_account = async function ( req, res ) {
   // newAccount.DCT = dctData;
 
   // await new DAI walletAddress
+  daiData = await dai_controller.get_new_address();
+  newAccount.DAI = daiData;
 
   //save account object to the database
   newAccount.save ( function ( err, dbResponse ) {
