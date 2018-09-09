@@ -6,7 +6,7 @@ let AccountSchema = new Schema({
     password: {type: String, required: true, max: 64},
     companyType: {type: String, required: true, max: 64},
     BTC: {type: String, required: false, max: 64},
-    ETH: {type: String, required: false, default: "pending", max: 64},
+    ETH: {type: String, required: false, max: 64},
     PIVX: {type: String, required: false, max: 64},
     DCT: {type: String, required: false, max: 64},
     DAI: {type: String, required: false, max: 64}
