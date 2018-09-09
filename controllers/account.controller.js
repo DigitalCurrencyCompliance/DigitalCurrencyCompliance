@@ -1,8 +1,17 @@
 const mongoose = require ( 'mongoose' );
 const Account = mongoose.model ( 'Account' );
 const chalk = require ( 'chalk' );
+const request = require( 'superagent' );
+const pivx_controller = require('./pivx.controller');
+const ethereum_controller = require('./ethereum.controller');
+const dedent_controller = require('./decent.controller')
 
-// CoinCap API call, without validation or sanitation
+// returns a message for testing routes
+exports.msg = function (req, res) {
+  res.send("Generic Success Message");
+}
+
+//Simple version, without validation or sanitation
 exports.test = async function ( req, res ) {
   let response;
   try{
@@ -18,7 +27,21 @@ exports.test = async function ( req, res ) {
   res.send (response);
 }
 
-// infura Api call
+exports.eth = async function ( req, res ) {
+  let response;
+  try{
+    await request
+    .get('http://coincap.io/page/LTC')
+    .then((res) =>{
+        console.log(res.body);
+        response = res.body;
+    })
+  } catch(err){
+      console.log(err);
+    }
+  res.send (response);
+}
+
 exports.infura = async function ( req, res ) {
   let response;
   try{
@@ -34,16 +57,39 @@ exports.infura = async function ( req, res ) {
   res.send (response);
 }
 
+exports.new_account = async function ( req, res ) {
+  let ethData;
+  let pivxData;
+  let dctData;
+  let newAccount = new Account (
+    {
+      ein: req.body.ein,
+      password: req.body.password,
+      companyType: req.body.companyType,
+      BTC: req.body.BTC,
+      ETH: req.body.ETH,
+      PIVX: req.body.PIVX,
+      DCT: req.body.DCT,
+      DAI: req.body.DAI
+    }
+  );
+
+  // await new BTC walletAddress
 
   // await new ETH walletAddress
-  // ethData = await ethereum_controller.get_new_address();
-  // newAccount.ETH = ethData
+
+  //
+  console.log('shark nado');
+  ethData = await ethereum_controller.get_new_address();
+  newAccount.ETH = ethData;
 
   // await new PIVX walletAddress
   pivxData = await pivx_controller.get_new_address();
   newAccount.PIVX = pivxData;
-
-  // await new DCT walletAddress
+  //
+  // // await new DCT walletAddress
+  // dctData = await decent_controller.get_new_address();
+  // newAccount.DCT = dctData;
 
   // await new DAI walletAddress
 
