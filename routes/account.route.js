@@ -14,7 +14,7 @@ router.post('/newAccount', account_controller.new_account);
 router.post('/newBtcWallet', account_controller.test);
 
 // create an ETH newWallet
-router.post('/newEthWallet', account_controller.eth); // wtf! <--------- Line
+router.post('/newEthWallet', account_controller.eth); 
 
 // this GETs the infura api Ethereum Block Data
 router.get('/infura', account_controller.infura);

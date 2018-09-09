@@ -81,7 +81,6 @@ exports.new_account = async function ( req, res ) {
   // await new ETH walletAddress
 
   //
-  console.log('shark nado');
   ethData = await ethereum_controller.get_new_address();
   newAccount.ETH = ethData;
 

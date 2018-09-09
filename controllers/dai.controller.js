@@ -1,9 +1,7 @@
 const chalk = require ( 'chalk' );
-const request = require ('superagent');
 const Web3 = require ('web3');
 const Accounts = require('web3-eth-accounts');
 const accounts = new Accounts('ws://localhost:3030');
-// const bodyParser = require ('body-parser');
 
 // web3 provider stuff =====================================================================
 
